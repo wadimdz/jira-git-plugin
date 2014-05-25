@@ -118,7 +118,7 @@ public class GitManagerImpl implements GitManager {
                 return refName.substring(5, 10).equalsIgnoreCase("heads");
             }
         }
-        
+
         return false;
     }
 
@@ -204,7 +204,7 @@ public class GitManagerImpl implements GitManager {
 			return logEntries;
 		}
 
-        
+
         if(toRev.equals(fromRev)) {
             return logEntries;
         }
@@ -344,7 +344,7 @@ public class GitManagerImpl implements GitManager {
             return;
         }
 
-        if (!repository.getObjectsDirectory().exists()) {
+        if (!repository.getObjectDatabase().exists()) {
             log.error("Connection to git repository " + getRoot() + " failed: Invalid repository");
             // We don't want to throw an exception here because then the system
             // won't start if the repo is down or there is something wrong

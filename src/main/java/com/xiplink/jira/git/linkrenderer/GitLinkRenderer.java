@@ -10,15 +10,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import com.xiplink.jira.git.FileDiff;
 
+public interface GitLinkRenderer {
+    // Method names end in "Html" to disable HTML escaping
+    // https://developer.atlassian.com/display/JIRADEV/Velocity+Templates
 
+    String getRevisionLinkHtml(RevCommit revision);
 
-public interface GitLinkRenderer
-{
-    String getRevisionLink(RevCommit revision);
-    String getRevisionHref(RevCommit revision);
+    String getChangePathLinkHtml(RevCommit revision, FileDiff changePath);
 
-    String getChangePathLink(RevCommit revision, FileDiff changePath);
-
-    public String getCopySrcLink(RevCommit revision, FileDiff changePath);
-
+    public String getCopySrcLinkHtml(RevCommit revision, FileDiff changePath);
 }

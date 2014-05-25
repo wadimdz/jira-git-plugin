@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
@@ -10,6 +11,7 @@
     <packaging>atlassian-plugin</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jira.version>5.0.1</jira.version>
         <jira.data.version>5.0.1</jira.data.version>
     </properties>
@@ -45,7 +47,7 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>0.10.1</version>
+            <version>3.3.1.201403241930-r</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>
@@ -64,14 +66,20 @@
             <version>3.2.0</version>
             <scope>provided</scope>
         </dependency>
-<!--
         <dependency>
-            <groupId>opensymphony</groupId>
-            <artifactId>oscore</artifactId>
-            <version>2.2.7-atlassian-1</version>
-            <scope>compile</scope>
+            <groupId>com.atlassian.velocity.htmlsafe</groupId>
+            <artifactId>velocity-htmlsafe</artifactId>
+            <version>1.2.1-m2</version>
+            <scope>provided</scope>
         </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>opensymphony</groupId>
+                    <artifactId>oscore</artifactId>
+                    <version>2.2.7-atlassian-1</version>
+                    <scope>compile</scope>
+                </dependency>
+        -->
     </dependencies>
 
     <developers>
@@ -85,9 +93,9 @@
             <organizationUrl>http://www.reliadev.com</organizationUrl>
         </developer>
         <developer>
-                    <name>Marcello Teodori</name>
-                    <organization></organization>
-                    <organizationUrl></organizationUrl>
+            <name>Marcello Teodori</name>
+            <organization></organization>
+            <organizationUrl></organizationUrl>
         </developer>
         <developer>
             <name>Daniel Gomes</name>
