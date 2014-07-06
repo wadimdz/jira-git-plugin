@@ -9,6 +9,7 @@ import com.atlassian.jira.security.Permissions;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
 import com.xiplink.jira.git.MultipleGitRepositoryManager;
 import com.xiplink.jira.git.WebLinkType;
+import webwork.action.ServletActionContext;
 
 /**
  * Base class for the Git plugins actions.
@@ -37,6 +38,14 @@ public class GitActionSupport extends JiraWebActionSupport {
         }
 
         return INPUT;
+    }
+
+    /**
+     * Configure the response to return JSON. This method can be called from a JSON template to
+     * ensure that the content-type is set to 'application/json'.
+     */
+    public void returnJson() {
+        ServletActionContext.getResponse().setContentType("application/json");
     }
 
     public List<WebLinkType> getWebLinkTypes() throws IOException {

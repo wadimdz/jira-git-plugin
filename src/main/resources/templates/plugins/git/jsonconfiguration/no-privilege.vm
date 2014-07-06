@@ -1,0 +1,6 @@
+#enable_html_escaping()
+$action.returnJson()
+
+{
+    'error': '$i18n.getText("git.admin.privilege.required")'
+}

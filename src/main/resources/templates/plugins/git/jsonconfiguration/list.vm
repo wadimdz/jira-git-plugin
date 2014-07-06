@@ -1,0 +1,64 @@
+#enable_html_escaping()
+$action.returnJson()
+
+#if ($action.hasPermissions())
+{
+    "repositories": {
+    #foreach ($repo in $action.getRepositories())
+        #if ($velocityCount > 1)
+        ,
+        #end
+        "$repo.getDisplayName()": {
+            "root": "$repo.getRoot()",
+            "origin": "$repo.getOrigin()",
+            "id": "$repo.getId()",
+            #if ($repo.isWebLinking())
+            "weblink": "$repo.getWebLink()",
+            #end
+            #if ($repo.getViewLinkFormat())
+            "view_links": {
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getCopyFromFormat())
+                    #set ($sep = ",")
+                    "copy_from_format": "$repo.getViewLinkFormat().getCopyFromFormat()"
+                #end
+                $sep
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getChangesetFormat())
+                    #set ($sep = ",")
+                    "change_set_format": "$repo.getViewLinkFormat().getChangesetFormat()"
+                #end
+                $sep
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getFileAddedFormat())
+                    #set ($sep = ",")
+                    "file_added_format": "$repo.getViewLinkFormat().getFileAddedFormat()"
+                #end
+                $sep
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getFileModifiedFormat())
+                    #set ($sep = ",")
+                    "file_modified_format": "$repo.getViewLinkFormat().getFileModifiedFormat()"
+                #end
+                $sep
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getFileReplacedFormat())
+                    #set ($sep = ",")
+                    "file_replaced_format": "$repo.getViewLinkFormat().getFileReplacedFormat()"
+                #end
+                $sep
+                #set ($sep = "")
+                #if ($repo.getViewLinkFormat().getFileDeletedFormat())
+                    #set ($sep = ",")
+                    "file_deleted_format": "$repo.getViewLinkFormat().getFileDeletedFormat()"
+                #end
+            },
+            #end
+            "status": #if ($repo.isActive()) true #else false ($repo.getInactiveMessage()) #end
+        }
+    #end
+    }
+}
+#else
+	#parse("templates/plugins/git/jsonconfiguration/no-privilege.vm")
+#end

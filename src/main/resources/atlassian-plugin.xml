@@ -48,6 +48,9 @@
             <action name="com.xiplink.jira.git.action.ViewGitRepositoriesAction" alias="ViewGitRepositories">
                 <view name="success">/templates/plugins/git/configuration/list.vm</view>
             </action>
+            <action name="com.xiplink.jira.git.action.ViewGitRepositoriesAction" alias="ViewGitRepositoriesJson">
+                <view name="success">/templates/plugins/git/jsonconfiguration/list.vm</view>
+            </action>
             <action name="com.xiplink.jira.git.action.AddGitRepositoryAction" alias="AddGitRepository">
                 <view name="input">/templates/plugins/git/configuration/add.vm</view>
                 <view name="error">/templates/plugins/git/configuration/add.vm</view>
