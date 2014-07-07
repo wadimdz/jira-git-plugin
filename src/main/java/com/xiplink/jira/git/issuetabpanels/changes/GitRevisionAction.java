@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -96,7 +97,10 @@ public class GitRevisionAction extends AbstractIssueAction {
     public String getLinkedLogMessageHtml() {
         // Name ends in Html to avoid HTML escaping
         // https://developer.atlassian.com/display/JIRADEV/Velocity+Templates
-        return JiraKeyUtils.linkBugKeys(revision.getFullMessage().trim());
+
+        // Escape characters in the original commit message to prevent them being interpreted as HTML.
+        String sanitized = StringEscapeUtils.escapeXml(revision.getFullMessage().trim());
+        return JiraKeyUtils.linkBugKeys(sanitized);
     }
 
     /**
