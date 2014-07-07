@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
     <artifactId>jira-git-plugin</artifactId>
-    <version>0.6.4.5-SNAPSHOT</version>
+    <version>0.6.4.5-lable1</version>
 
     <name>JIRA Git plugin</name>
     <packaging>atlassian-plugin</packaging>
