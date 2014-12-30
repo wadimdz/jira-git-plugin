@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
     <artifactId>jira-git-plugin</artifactId>
-    <version>0.6.4.5-lable2</version>
+    <version>0.6.4.5-mossroy1</version>
 
     <name>JIRA Git plugin</name>
     <packaging>atlassian-plugin</packaging>
@@ -25,12 +25,42 @@
             <artifactId>jira-api</artifactId>
             <version>${jira.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <!-- Exclude JTA and JNDI dependencies : they are not necessary
+                to compile this plugin, and are not available in the default Maven
+                repositories, which would force to install them manually in the
+                local Maven repository.
+                -->
+                <exclusion>
+                    <groupId>jta</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jndi</groupId>
+                    <artifactId>jndi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-core</artifactId>
             <version>${jira.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <!-- Exclude JTA and JNDI dependencies : they are not necessary
+                to compile this plugin, and are not available in the default Maven
+                repositories, which would force to install them manually in the
+                local Maven repository.
+                -->
+                <exclusion>
+                    <groupId>jta</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jndi</groupId>
+                    <artifactId>jndi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
