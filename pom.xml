@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
     <artifactId>jira-git-plugin</artifactId>
-    <version>0.6.4.5-mossroy1</version>
+    <version>0.6.4.5-wd3</version>
 
     <name>JIRA Git plugin</name>
     <packaging>atlassian-plugin</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jira.version>5.0.1</jira.version>
-        <jira.data.version>5.0.1</jira.data.version>
+        <jira.version>6.4.4</jira.version>
+        <jira.data.version>6.4.4</jira.data.version>
     </properties>
 
     <description>Git Jira plugin</description>
@@ -77,7 +77,18 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>3.3.1.201403241930-r</version>
+            <version>4.0.3.201509231615-r</version>
+            <!--  <version>3.3.1.201403241930-r</version>  -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>
@@ -170,7 +181,7 @@
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
-                <version>3.9.1</version>
+            <!--    <version>3.9.1</version> -->
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
@@ -183,7 +194,7 @@
                 <version>2.3.2</version>
                 <configuration>
                     <source>1.5</source>
-                    <target>1.5</target>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
