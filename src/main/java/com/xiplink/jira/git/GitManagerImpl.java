@@ -35,6 +35,8 @@ import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
 import org.eclipse.jgit.transport.Transport;
+import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
@@ -107,8 +109,12 @@ public class GitManagerImpl implements GitManager {
 	}
 
     public String getRefId(String refName) throws IOException {
-        Ref ref = repository.getRef(refName);
-        return (ref != null ? ref.getObjectId().getName() : null);
+    	try {
+	        Ref ref = repository.getRef(refName);
+	        return (ref != null ? ref.getObjectId().getName() : null);
+    	} catch (Throwable e) {
+    		return null;
+    	}
     }
 
     private boolean isRealHead(Ref ref) {
@@ -147,19 +153,27 @@ public class GitManagerImpl implements GitManager {
 	}
 
     private RevCommit parseCommit(RevWalk walk, String revId) throws Exception {
-        ObjectId rev = repository.resolve(revId);
-        RevCommit commit = walk.parseCommit(rev);
-        return commit;
+    	try {
+	        ObjectId rev = repository.resolve(revId);
+	        RevCommit commit = walk.parseCommit(rev);
+	        return commit;
+    	} catch (Throwable t) {
+    		return null;
+    	}
     }
 
     private void markStart(RevWalk walk, String revId) throws Exception {
         RevCommit commit = parseCommit(walk, revId);
-        walk.markStart(commit);
+        if (commit != null) {
+        	walk.markStart(commit);
+        }
     }
 
     private void markUninteresting(RevWalk walk, String revId) throws Exception {
         RevCommit commit = parseCommit(walk, revId);
-        walk.markUninteresting(commit);
+        if (commit != null) {
+        	walk.markUninteresting(commit);
+        }
     }
 
     public synchronized RevCommit getMergeBase(String baseId, String branchId) {
@@ -237,7 +251,7 @@ public class GitManagerImpl implements GitManager {
 
 		} catch (Exception e) {
 			log.error("Error retrieving changes from the repository.", e);
-			deactivate(e.getMessage());
+			//deactivate(e.getMessage());
 		}
 		// temp log comment
 		if (log.isDebugEnabled()) {
@@ -448,6 +462,11 @@ public class GitManagerImpl implements GitManager {
 
 		try {
 			Transport tn = Transport.open(repository, getOrigin());
+			// workaround for user:pass in URL: create CredentialsProvider when credentials found
+			URIish originUrl = new URIish(getOrigin());
+			if (StringUtils.isNotEmpty(originUrl.getUser()) && StringUtils.isNotEmpty(originUrl.getPass())) {
+				tn.setCredentialsProvider(new UsernamePasswordCredentialsProvider(originUrl.getUser(), originUrl.getPass()));
+			}
 			final FetchResult r;
 			List<RefSpec> toget = new ArrayList<RefSpec>();
 			toget.add(new RefSpec("refs/heads/*:refs/heads/*"));
